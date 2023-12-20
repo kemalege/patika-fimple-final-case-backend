@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from 'uuid';
 
 const Schema = mongoose.Schema;
 
 const ApplicationSchema = new Schema({
+  code: {
+    type: String,
+    default: uuidv4,
+    unique: true,
+  },
   name: {
     type: String,
   },
@@ -10,13 +16,13 @@ const ApplicationSchema = new Schema({
     type: String,
   },
   age: {
-    type: number,
+    type: Number,
   },
   identity: {
-    type: number,
+    type: Number,
   },
   applicationReason: {
-    type: string,
+    type: String,
   },
   createdAt: {
     type: Date,
@@ -28,7 +34,7 @@ const ApplicationSchema = new Schema({
   address: {
     type: String,
   },
-  profile_image: {
+  application_image: {
     public_id: {
       type: String,
     },

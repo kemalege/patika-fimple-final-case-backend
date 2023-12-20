@@ -1,13 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
-// import connectDatabase from "./helpers/database/connectDatabase";
+import routes from "./routes/index.js";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import connectDatabase from "./utils/database/connectDb.js";
 
 dotenv.config({});
 
-// connectDatabase();
+connectDatabase();
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const PORT = 5000 || process.env.PORT;
+
+app.use(routes);
 
 app.get("/", (req, res) => {
   res.send("Server is up");
