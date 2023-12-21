@@ -9,6 +9,11 @@ const ApplicationSchema = new Schema({
     default: uuidv4,
     unique: true,
   },
+  status: {
+    type: String,
+    enum: ["pending", "approved", "rejected"],
+    default: "pending",
+  },
   name: {
     type: String,
   },

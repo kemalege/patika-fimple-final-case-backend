@@ -1,7 +1,7 @@
 import CustomError from "../utils/error/CustomError.js";
 import User from "../models/User.js";
 import asyncErrorWrapper from "express-async-handler";
-import { validateUserInput } from "../utils/input/inputFunctions.js";
+import { comparePassword, validateUserInput } from "../utils/input/inputFunctions.js";
 import { sendJwtToClient } from "../utils/database/auth/tokenFunctions.js";
 
 const register = asyncErrorWrapper(async (req, res, next) => {
