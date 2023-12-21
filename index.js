@@ -5,6 +5,8 @@ import cors from "cors";
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import connectDatabase from "./utils/database/connectDb.js";
+import {customErrorHandler} from "./middlewares/errors/customErrorHandler.js";
+
 
 dotenv.config({});
 
@@ -26,6 +28,8 @@ app.use(cookieParser());
 const PORT = 5000 || process.env.PORT;
 
 app.use(routes);
+
+app.use(customErrorHandler);
 
 app.get("/", (req, res) => {
   res.send("Server is up");

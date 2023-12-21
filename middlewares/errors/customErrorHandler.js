@@ -1,4 +1,4 @@
-const CustomError = require("../../helpers/error/CustomError");
+import CustomError from "../../utils/error/CustomError.js";
 
 const customErrorHandler = (err, req, res, next) => {
   let customError = err;
@@ -7,7 +7,7 @@ const customErrorHandler = (err, req, res, next) => {
     customError = new CustomError("Unexpected syntax", 400);
   }
   if (err.name === "ValidationError") {
-    customError = new CustomError(err.message, 400);
+    customError = new CustomError(err.message, 404);
   }
   if (err.name === "CastError") {
     customError = new CustomError("Please provide a valid id", 400);
@@ -27,4 +27,4 @@ const customErrorHandler = (err, req, res, next) => {
   });
 };
 
-export default customErrorHandler;
+export {customErrorHandler};

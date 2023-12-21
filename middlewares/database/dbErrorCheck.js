@@ -1,31 +1,16 @@
-import CustomError from "../../helpers/error/CustomError";
 import asyncErrorWrapper from "express-async-handler";
-import User from "../../models/User";
-import Comment from "../../models/Comment";
+import Application from "../../models/Application.js";
+import CustomError from "../../utils/error/CustomError.js";
 
-const checkUserExist = asyncErrorWrapper(async (req, res, next) => {
-  const id  = req.params.id || req.params.user_id;
-  const user = await User.findById(id);
+const checkApplicationExist = asyncErrorWrapper(async (req, res, next) => {
+  const code = req.params.code;
+  const application = await Application.findOne({ code });
 
-  if (!user) {
-    return next(new CustomError("There is no such user with that id", 400));
+  if (!application) {
+    return next(new CustomError("Başvuru bulunamadı", 404));
   }
-  req.data = user;
+  req.data = application;
   next();
 });
 
-const checkOwnerAndAnswerExist = asyncErrorWrapper(async (req, res, next) => {
-  const user_id = req.params.user_id;
-  const comment_id = req.params.comment_id;
-  
-  const comment = await Comment.findOne({
-    _id: comment_id,
-    owner : user_id
-  })
-  if(!comment) {
-    return next(new Error('There is no comment with that id associated with that user id', 400));
-  }
-  next()
-});
-
-export { checkUserExist, checkOwnerAndAnswerExist };
+export { checkApplicationExist };
