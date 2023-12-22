@@ -11,7 +11,7 @@ const ApplicationSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "approved", "rejected"],
+    enum: ["pending", "solved", "rejected"],
     default: "pending",
   },
   name: {
@@ -47,6 +47,11 @@ const ApplicationSchema = new Schema({
       type: String,
     },
   },
+  answer: [
+    {
+      type: String,
+    },
+  ],
 });
 
 export default mongoose.model("Application", ApplicationSchema);

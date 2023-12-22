@@ -22,5 +22,47 @@ const getApplicationByCode = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-export {applyNewApplication, getApplicationByCode};
+const getPendingApplications = asyncErrorWrapper(async (req, res, next) => {
+    const pendingApplications = await Application.find({ status: "pending" });
+    res.status(200).json({
+        success: true,
+        data: pendingApplications,
+    });
+});
+
+const addAnswerToApplicaton = asyncErrorWrapper(async (req, res, next) => {
+    
+    const applyId = req.params.id;
+    const {answer} = req.body
+  
+    const application = await Application.findById(applyId);
+  
+    application.answer.push(answer);
+    application.status = "solved";
+    await application.save();
+  
+    res.status(200).json({
+        success: true,
+        data: application,
+    });
+});
+
+const adjustApplicationStatus = asyncErrorWrapper(async (req, res, next) => {
+    
+    const applyId = req.params.id;
+
+    const {status} = req.body
+  
+    const application = await Application.findById(applyId);
+
+    application.status = status
+    await application.save();
+  
+    res.status(200).json({
+        success: true,
+        data: application,
+    });
+});
+
+export {applyNewApplication, getApplicationByCode, getPendingApplications, addAnswerToApplicaton, adjustApplicationStatus};
   
