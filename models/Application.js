@@ -6,7 +6,6 @@ const Schema = mongoose.Schema;
 const ApplicationSchema = new Schema({
   code: {
     type: String,
-    default: uuidv4,
     unique: true,
   },
   status: {
@@ -14,10 +13,10 @@ const ApplicationSchema = new Schema({
     enum: ["pending", "solved", "rejected"],
     default: "pending",
   },
-  name: {
+  firstName: {
     type: String,
   },
-  surname: {
+  lastName: {
     type: String,
   },
   age: {
@@ -47,7 +46,7 @@ const ApplicationSchema = new Schema({
       type: String,
     },
   },
-  answer: [
+  answers: [
     {
       type: String,
     },

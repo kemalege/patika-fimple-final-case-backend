@@ -18,17 +18,17 @@ const login = asyncErrorWrapper(async (req, res, next) => {
   const { userName, password } = req.body;
 
   if (!validateUserInput(userName, password)) {
-    return next(new CustomError("Please Check your Inputs", 400));
+    return next(new CustomError("Lütfen giriş bilgilerinizi kontrol ediniz", 400));
   }
-
+  
   const user = await User.findOne({ userName }).select("+password");
 
   if(!user) {
-    return next(new CustomError("Invalid email address or password", 400));
+    return next(new CustomError("Hatalı kullanıcı adı veya parola", 400));
   }
 
   if (!comparePassword(password, user.password)) {
-    return next(new CustomError("Please Check your credentials", 400));
+    return next(new CustomError("Lütfen giriş bilgilerinizi kontrol ediniz", 400));
   }
 
   sendJwtToClient(user, res);

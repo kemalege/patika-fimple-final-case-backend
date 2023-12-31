@@ -1,11 +1,15 @@
+import ShortUniqueId from "short-unique-id";
 import Application from "../models/Application.js";
 import asyncErrorWrapper from "express-async-handler";
 
 const applyNewApplication = asyncErrorWrapper(async (req, res, next) => {
+    const uid = new ShortUniqueId({ length: 10});
+    const uidCode = uid.rnd()
         
         const applicationDetails = req.body;
     
         const application = await Application.create({
+            code : uidCode,
             ...applicationDetails,
         });
         res.status(200).json({
@@ -37,7 +41,7 @@ const addAnswerToApplicaton = asyncErrorWrapper(async (req, res, next) => {
   
     const application = await Application.findById(applyId);
   
-    application.answer.push(answer);
+    application.answers.push(answer);
     application.status = "solved";
     await application.save();
   
