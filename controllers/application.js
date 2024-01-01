@@ -42,7 +42,7 @@ const addAnswerToApplicaton = asyncErrorWrapper(async (req, res, next) => {
     const application = await Application.findById(applyId);
   
     application.answers.push(answer);
-    application.status = "solved";
+    // application.status = "solved";
     await application.save();
   
     res.status(200).json({
