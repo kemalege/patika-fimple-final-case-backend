@@ -68,5 +68,22 @@ const adjustApplicationStatus = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-export {applyNewApplication, getApplicationByCode, getPendingApplications, addAnswerToApplicaton, adjustApplicationStatus};
+const getApplicationById = asyncErrorWrapper(async (req, res, next) => {
+    const application = req.data;
+    res.status(200).json({
+        success: true,
+        data: application,
+    });
+});
+
+const deleteApplicationById = asyncErrorWrapper(async (req, res, next) => {
+    const applyId = req.params.id;
+    await Application.findByIdAndDelete(applyId);
+    res.status(200).json({
+        success: true,
+        message: "Başvuru başarıyla silindi",
+    });
+});
+
+export {applyNewApplication, getApplicationByCode, getPendingApplications, addAnswerToApplicaton, adjustApplicationStatus, deleteApplicationById, getApplicationById};
   

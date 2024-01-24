@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 const PORT = 5000 || process.env.PORT;
 
-app.use(routes);
+app.use("/api/v1", routes);
 
 app.use(customErrorHandler);
 

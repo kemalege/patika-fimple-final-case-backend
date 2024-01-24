@@ -3,7 +3,7 @@ import Application from "../../models/Application.js";
 import CustomError from "../../utils/error/CustomError.js";
 
 const checkApplicationExist = asyncErrorWrapper(async (req, res, next) => {
-  const code = req.params.code;
+  const code = req.params.code || req.params.id;
   const application = await Application.findOne({ code });
 
   if (!application) {
