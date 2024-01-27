@@ -46,11 +46,12 @@ const ApplicationSchema = new Schema({
       type: String,
     },
   },
-  answers: [
+  answers : [
     {
-      type: String,
-    },
-  ],
+        type : mongoose.Schema.ObjectId,
+        ref : "Answer"
+    }
+]
 });
 
 export default mongoose.model("Application", ApplicationSchema);

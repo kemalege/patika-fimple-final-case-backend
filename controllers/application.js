@@ -1,5 +1,6 @@
 import ShortUniqueId from "short-unique-id";
 import Application from "../models/Application.js";
+import Answer from "../models/Answer.js";
 import asyncErrorWrapper from "express-async-handler";
 
 const applyNewApplication = asyncErrorWrapper(async (req, res, next) => {
@@ -105,6 +106,39 @@ const deleteApplicationById = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-export {applyNewApplication, getApplicationByCode, getAllApplications, getPendingApplications, addAnswerToApplicaton,
-     adjustApplicationStatus, deleteApplicationById, getApplicationById, editApplication};
+const addNewAnswerApplication = asyncErrorWrapper(async (req, res, next) => {
+    const answer_id = req.params.id;
+
+    console.log(answer_id);
+    
+    const information = req.body;
+
+    const answer = await Answer.create({
+        ...information,
+        application : answer_id,
+    });
+
+    return res.status(200)
+    .json({
+        success : true,
+        data : answer
+    });
+});
+
+const getAnswersByApplication = asyncErrorWrapper(async (req, res, next) => {
+    const application_id = req.params.id;
+    
+    const application = await Application.findById(application_id).populate("answers");
+
+    const answers = application.answers;
+
+    return res.status(200).json({
+        success: true,
+        count: answers.length,
+        data: answers
+    })
+}); 
+
+export {applyNewApplication, getApplicationByCode, getAllApplications, getPendingApplications, addAnswerToApplicaton, getAnswersByApplication,
+     adjustApplicationStatus, deleteApplicationById, getApplicationById, editApplication, addNewAnswerApplication};
   
