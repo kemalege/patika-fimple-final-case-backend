@@ -5,6 +5,7 @@ import { checkApplicationExist, checkApplicationExistByCode } from '../middlewar
 import { getAccessToRoute, getAdminAcess } from '../middlewares/auth/auth.js';
 import Application from '../models/Application.js';
 import { applicationQueryMiddleware } from '../middlewares/query/applicationQueryMiddleware.js';
+import answer from './answer.js';
 
 const router = express.Router();
 
@@ -15,9 +16,10 @@ router.get("/:id/answers", getAnswersByApplication);
 router.get("/allApplications", getAllApplications);
 router.put("/editApplication/:id", checkApplicationExist, editApplication);
 router.post("/:id/answerApply", addNewAnswerApplication);
-router.delete("/:id/delete", deleteApplicationById);
 router.post("/adjustStatus/:id", [getAccessToRoute, getAdminAcess], adjustApplicationStatus);
 router.get("/code/:code", checkApplicationExistByCode, getApplicationByCode);
 router.get("/:id", checkApplicationExist, getApplicationById);
+router.use("/:application_id/answers", checkApplicationExist, answer);
+
 
 export default router;
