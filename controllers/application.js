@@ -26,6 +26,11 @@ const getApplicationByCode = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
+const getAllApplications = asyncErrorWrapper(async (req, res, next) => {
+    return res.status(200).json(res.queryResults);
+
+});
+
 const getPendingApplications = asyncErrorWrapper(async (req, res, next) => {
     const pendingApplications = await Application.find({ status: "pending" });
     res.status(200).json({
@@ -76,6 +81,21 @@ const getApplicationById = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
+const editApplication = asyncErrorWrapper(async (req, res, next) => {
+    const applyId = req.params.id;
+    const applicationDetails = req.body;
+
+    const application = await Application.findByIdAndUpdate(applyId, applicationDetails, {
+        new: true,
+        runValidators: true,
+    });
+
+    res.status(200).json({
+        success: true,
+        data: application,
+    });
+});
+
 const deleteApplicationById = asyncErrorWrapper(async (req, res, next) => {
     const applyId = req.params.id;
     await Application.findByIdAndDelete(applyId);
@@ -85,5 +105,6 @@ const deleteApplicationById = asyncErrorWrapper(async (req, res, next) => {
     });
 });
 
-export {applyNewApplication, getApplicationByCode, getPendingApplications, addAnswerToApplicaton, adjustApplicationStatus, deleteApplicationById, getApplicationById};
+export {applyNewApplication, getApplicationByCode, getAllApplications, getPendingApplications, addAnswerToApplicaton,
+     adjustApplicationStatus, deleteApplicationById, getApplicationById, editApplication};
   

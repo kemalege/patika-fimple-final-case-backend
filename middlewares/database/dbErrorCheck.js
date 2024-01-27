@@ -3,8 +3,11 @@ import Application from "../../models/Application.js";
 import CustomError from "../../utils/error/CustomError.js";
 
 const checkApplicationExist = asyncErrorWrapper(async (req, res, next) => {
-  const code = req.params.code || req.params.id;
-  const application = await Application.findOne({ code });
+  const application_id = req.params.code || req.params.id;
+
+  const application = await Application.findOne({
+    $or: [{ _id: application_id }, { code: application_id }]
+  });
 
   if (!application) {
     return next(new CustomError("Başvuru bulunamadı", 404));
@@ -13,4 +16,19 @@ const checkApplicationExist = asyncErrorWrapper(async (req, res, next) => {
   next();
 });
 
-export { checkApplicationExist };
+const checkApplicationExistByCode = asyncErrorWrapper(async (req, res, next) => {
+  const application_code = req.params.code
+
+  const application = await Application.findOne({
+    code: application_code
+  });
+
+  if (!application) {
+    return next(new CustomError("Başvuru bulunamadı", 404));
+  }
+  req.data = application;
+  next();
+});
+
+
+export { checkApplicationExist, checkApplicationExistByCode };
