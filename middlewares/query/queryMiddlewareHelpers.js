@@ -1,5 +1,5 @@
 const searchHelper = (searchKey, query, req) => {
-    console.log(req.query.search);
+    // console.log(req.query.search);
     if (req.query.search) {
         const searchObject = {};
 
@@ -26,6 +26,21 @@ const questionSortHelper = (query, req) => {
     }
     return query.sort("-createdAt");
 }
+const dateRangeHelper = (field, query, req) => {
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+
+    console.log(startDate, endDate);
+
+    if (startDate && endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        query = query.where(field).gte(start).lte(end);
+    }
+    return query;
+};
+
 const paginationHelper = async (totalDocument, query,req) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
@@ -56,4 +71,4 @@ const paginationHelper = async (totalDocument, query,req) => {
     };
 };
 
-export {searchHelper, populateHelper, paginationHelper, questionSortHelper};
+export {searchHelper, populateHelper, paginationHelper, questionSortHelper, dateRangeHelper};

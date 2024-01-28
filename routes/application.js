@@ -10,12 +10,13 @@ import answer from './answer.js';
 const router = express.Router();
 
 router.post("/apply", applyNewApplication);
-router.get('/', applicationQueryMiddleware(Application), getAllApplications);
+router.post('/', applicationQueryMiddleware(Application), getAllApplications);
 router.get("/pendingApplications", getPendingApplications);
 router.get("/:id/answers", getAnswersByApplication);
 router.get("/allApplications", getAllApplications);
 router.put("/editApplication/:id", checkApplicationExist, editApplication);
 router.post("/:id/answerApply", addNewAnswerApplication);
+router.delete("/:id/delete", deleteApplicationById);
 router.post("/adjustStatus/:id", [getAccessToRoute, getAdminAcess], adjustApplicationStatus);
 router.get("/code/:code", checkApplicationExistByCode, getApplicationByCode);
 router.get("/:id", checkApplicationExist, getApplicationById);

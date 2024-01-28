@@ -3,7 +3,8 @@ import {
     searchHelper,
     populateHelper,
     paginationHelper,
-    questionSortHelper
+    questionSortHelper,
+    dateRangeHelper
 } from './queryMiddlewareHelpers.js';
 import asyncErrorWrapper from "express-async-handler";
 
@@ -13,6 +14,8 @@ const applicationQueryMiddleware = function(model,options){
         let query = model.find();
 
         query = searchHelper("status", query, req);
+
+        query = dateRangeHelper("createdAt", query, req);
 
         const total = await model.countDocuments();
 
