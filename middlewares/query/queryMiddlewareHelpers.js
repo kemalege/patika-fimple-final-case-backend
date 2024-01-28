@@ -37,7 +37,14 @@ const dateRangeHelper = (field, query, req) => {
         const end = new Date(endDate);
 
         query = query.where(field).gte(start).lte(end);
+    } else if (startDate) {
+        const start = new Date(startDate);
+        query = query.where(field).gte(start);
+    } else if (endDate) {
+        const end = new Date(endDate);
+        query = query.where(field).lte(end);
     }
+
     return query;
 };
 

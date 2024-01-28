@@ -10,8 +10,8 @@ const ApplicationSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "solved", "rejected"],
-    default: "pending",
+    enum: ["Pending", "Solved", "Rejected"],
+    default: "Pending",
   },
   firstName: {
     type: String,

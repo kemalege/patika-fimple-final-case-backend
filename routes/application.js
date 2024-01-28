@@ -14,7 +14,7 @@ router.post('/', applicationQueryMiddleware(Application), getAllApplications);
 router.get("/pendingApplications", getPendingApplications);
 router.get("/:id/answers", getAnswersByApplication);
 router.get("/allApplications", getAllApplications);
-router.put("/editApplication/:id", checkApplicationExist, editApplication);
+router.put("/:id/edit", checkApplicationExist, editApplication);
 router.post("/:id/answerApply", addNewAnswerApplication);
 router.delete("/:id/delete", deleteApplicationById);
 router.post("/adjustStatus/:id", [getAccessToRoute, getAdminAcess], adjustApplicationStatus);
